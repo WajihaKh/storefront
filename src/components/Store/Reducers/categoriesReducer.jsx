@@ -1,4 +1,3 @@
-// src/components/Reducers/categoriesReducer.jsx
 const initialState = {
   categories: [
     { name: 'electronics', displayName: 'Electronics', description: 'Electronic Items' },

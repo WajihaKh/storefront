@@ -1,4 +1,3 @@
-// src/components/Reducers/index.jsx
 import { combineReducers } from 'redux';
 import categoriesReducer from './categoriesReducer';
 import productsReducer from './productsReducer';

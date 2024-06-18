@@ -25,7 +25,7 @@ const Products = () => {
                   <CardMedia
                     component="img"
                     height="140"
-                    image={product.image}
+                    image={`https://unsplash.it/1920/1080?random${product.name}`}
                     alt={product.name}
                   />
                   <CardContent>
