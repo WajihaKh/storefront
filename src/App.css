@@ -1,0 +1,67 @@
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin: 20px 0;
+}
+
+footer {
+  text-align: center;
+  margin-top: 40px;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.categories {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.categories h5 {
+  margin-bottom: 20px;
+}
+
+.products {
+  text-align: center;
+}
+
+.products h3 {
+  margin-bottom: 10px;
+}
+
+.products h5 {
+  margin-bottom: 40px;
+  color: #888;
+}
+
+.product-card {
+  text-align: left;
+}
+
+.product-card img {
+  width: 100%;
+}
+
+.product-card h5 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+.product-card p {
+  margin: 10px 0;
+}
+
+.product-card .price {
+  font-weight: bold;
+  margin: 10px 0;
+}

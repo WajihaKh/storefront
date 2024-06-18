@@ -1,8 +1,11 @@
-# React + Vite
+# Storefront
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Author**: Wajiha Khan
 
-Currently, two official plugins are available:
+**Version**: 1.0.0
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Phase 1**:
+
+In Phase 1, we have set up the basic structure of the e-commerce application with category-based product filtering. The application uses Redux for state management, ensuring a scalable and maintainable codebase. The UML diagram provides a visual representation of the component structure and their interactions, aiding in understanding the flow of data and user interactions.
+
+![UML-DAY-1](./src/assets/day-1.png)
