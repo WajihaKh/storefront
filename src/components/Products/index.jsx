@@ -10,9 +10,6 @@ const Products = () => {
 
   const activeCategoryDetails = categories.find(category => category.name === activeCategory);
 
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-  }
 
   return (
     <div className="products">
@@ -46,7 +43,7 @@ const Products = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => handleAddToCart(product)}>Add to Cart</Button>
+                    <Button size="small" onClick={() => dispatch(addToCart(product))}>Add to Cart</Button>
                     <Button size="small">View Details</Button>
                   </CardActions>
                 </Card>

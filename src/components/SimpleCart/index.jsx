@@ -7,17 +7,17 @@ const SimpleCart = () => {
     const cartItems = useSelector(state => state.cart.items);
     const dispatch = useDispatch();
 
-    const handleRemove = (item) => {
-        dispatch(removeFromCart(item));
+    const handleRemove = (id) => {
+        dispatch(removeFromCart(id));
     };
 
     return (
         <div className="simple-cart">
             <List>
-                {cartItems.map((item, index) => (
-                    <ListItem key={index}>
+                {cartItems.map(item => (
+                    <ListItem key={item.id}>
                         <ListItemText primary={item.name} />
-                        <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item)}>
+                        <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item.id)}>
                             <DeleteIcon />
                         </IconButton>
                     </ListItem>

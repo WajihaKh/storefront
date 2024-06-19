@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 export const setActiveCategory = (category) => ({
     type: 'SET_ACTIVE_CATEGORY',
     payload: category,
@@ -10,10 +11,10 @@ export const setActiveCategory = (category) => ({
   
   export const addToCart = (product) => ({
     type: 'ADD_TO_CART',
-    payload: product,
+    payload: { ...product, id: uuidv4() },
   });
 
-  export const removeFromCart = (product) => ({
+  export const removeFromCart = (id) => ({
     type: 'REMOVE_FROM_CART',
-    payload: product,
+    payload: id,
   });
