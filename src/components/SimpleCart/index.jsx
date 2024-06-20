@@ -1,15 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { removeFromCart, updateProductOnServer } from '../Store/actions';
+import { removeFromCart } from '../Store/actions';
 
 const SimpleCart = () => {
   const cartItems = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-  const handleRemove = (item) => {
-    dispatch(removeFromCart(item.id));
-    dispatch(updateProductOnServer(item.id, item.quantity + 1));
+  const handleRemove = (productId) => {
+    dispatch(removeFromCart(productId));
   };
 
   return (
@@ -18,7 +17,7 @@ const SimpleCart = () => {
         {cartItems.map((item, index) => (
           <ListItem key={index}>
             <ListItemText primary={item.name} />
-            <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item)}>
+            <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item.id)}>
               <DeleteIcon />
             </IconButton>
           </ListItem>

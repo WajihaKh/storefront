@@ -19,6 +19,11 @@ const productsReducer = (state = initialState, action) => {
         products: action.payload,
         filteredProducts: action.payload,
       };
+    case FILTER_PRODUCTS_BY_CATEGORY:
+      return {
+        ...state,
+        filteredProducts: state.products.filter(product => product.category === action.payload),
+      };
     case UPDATE_PRODUCT_QUANTITY:
       return {
         ...state,
@@ -31,26 +36,15 @@ const productsReducer = (state = initialState, action) => {
     case ADD_TO_CART:
       return {
         ...state,
-        filteredProducts: state.filteredProducts.map((product) =>
+        products: state.products.map((product) =>
           product.id === action.payload.id
             ? { ...product, quantity: product.quantity - 1 }
             : product
         ),
-      };
-    case REMOVE_FROM_CART:
-      return {
-        ...state,
         filteredProducts: state.filteredProducts.map((product) =>
-          product.id === action.payload
-            ? { ...product, quantity: product.quantity + 1 }
+          product.id === action.payload.id
+            ? { ...product, quantity: product.quantity - 1 }
             : product
-        ),
-      };
-    case FILTER_PRODUCTS_BY_CATEGORY:
-      return {
-        ...state,
-        filteredProducts: state.products.filter(
-          (product) => product.category === action.payload
         ),
       };
     default:
