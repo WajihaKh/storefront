@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { List, ListItem, ListItemText, Typography, Box } from '@mui/material';
 import { setActiveCategory, filterProductsByCategory } from '../Store/actions';
 
-const Categories = ({ handleCategoryClick }) => {
+const Categories = () => {
   const categories = useSelector(state => state.categories.categories);
   const activeCategory = useSelector(state => state.categories.activeCategory);
   const dispatch = useDispatch();

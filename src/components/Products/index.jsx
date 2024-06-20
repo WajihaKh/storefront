@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Card, CardContent, CardMedia, Typography, CardActions, Button } from '@mui/material';
-import { addToCart, updateProductOnServer } from '../Store/actions';
+import { addToCart, updateProductQuantity } from '../Store/actions';
 
 const Products = () => {
   const filteredProducts = useSelector(state => state.products.filteredProducts);
-  console.log(filteredProducts);
   const activeCategory = useSelector(state => state.categories.activeCategory);
   const categories = useSelector(state => state.categories.categories);
   const dispatch = useDispatch();
@@ -12,8 +11,11 @@ const Products = () => {
   const activeCategoryDetails = categories.find(category => category.name === activeCategory);
 
   const handleAddToCart = (product) => {
-    dispatch(addToCart(product));
-    dispatch(updateProductOnServer(product.id, product.quantity - 1));
+    if (product.quantity > 0) {
+      console.log('Adding to cart:', product); // Add this line to verify the function call
+      dispatch(addToCart(product));
+      dispatch(updateProductQuantity(product.id, product.quantity - 1));
+    }
   };
 
   return (
@@ -21,19 +23,19 @@ const Products = () => {
       {activeCategory && (
         <div>
           <Typography variant="h3" gutterBottom>
-            {activeCategoryDetails.displayName}
+            {activeCategoryDetails?.displayName || 'Products'}
           </Typography>
           <Typography variant="h5" gutterBottom>
-            {activeCategoryDetails.description}
+            {activeCategoryDetails?.description || ''}
           </Typography>
           <Grid container spacing={4}>
             {filteredProducts.map(product => (
-              <Grid item key={product.name} xs={12} sm={6} md={4}>
+              <Grid item key={product.id} xs={12} sm={6} md={4}>
                 <Card className="product-card">
                   <CardMedia
                     component="img"
                     height="140"
-                    image={`https://unsplash.it/1920/1080?random${product.name}`}
+                    image={`https://unsplash.it/1920/1080?random=${product.name}`}
                     alt={product.name}
                   />
                   <CardContent>
