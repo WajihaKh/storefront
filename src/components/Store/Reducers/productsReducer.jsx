@@ -1,44 +1,61 @@
+import {
+  SET_PRODUCTS,
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  UPDATE_PRODUCT_QUANTITY,
+  FILTER_PRODUCTS_BY_CATEGORY,
+} from '../actions';
+
 const initialState = {
-    products: [
-      {
-        name: 'TV',
-        category: 'electronics',
-        description: 'See all the things',
-        price: 1000,
-      },
-      {
-        name: 'Macbook',
-        category: 'electronics',
-        description: 'Do all the things',
-        price: 1500,
-      },
-      {
-        name: 'Pasta',
-        category: 'foods',
-        description: 'Delicious italian cuisine',
-        price: 30,
-      },
-      {
-        name: 'Butter Chicken',
-        category: 'foods',
-        description: 'Tasty indian cuisine',
-        price: 15,
-      }
-    ],
-    filteredProducts: []
-  };
-  
-  const productsReducer = (state = initialState, action) => {
-    switch (action.type) {
-      case 'FILTER_PRODUCTS_BY_CATEGORY':
-        return {
-          ...state,
-          filteredProducts: state.products.filter(product => product.category === action.payload)
-        };
-      default:
-        return state;
-    }
-  };
-  
-  export default productsReducer;
-  
+  products: [],
+  filteredProducts: [],
+};
+
+const productsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case SET_PRODUCTS:
+      return {
+        ...state,
+        products: action.payload,
+        filteredProducts: action.payload,
+      };
+    case UPDATE_PRODUCT_QUANTITY:
+      return {
+        ...state,
+        products: state.products.map((product) =>
+          product.id === action.payload.productId
+            ? { ...product, quantity: action.payload.quantity }
+            : product
+        ),
+      };
+    case ADD_TO_CART:
+      return {
+        ...state,
+        filteredProducts: state.filteredProducts.map((product) =>
+          product.id === action.payload.id
+            ? { ...product, quantity: product.quantity - 1 }
+            : product
+        ),
+      };
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        filteredProducts: state.filteredProducts.map((product) =>
+          product.id === action.payload
+            ? { ...product, quantity: product.quantity + 1 }
+            : product
+        ),
+      };
+    case FILTER_PRODUCTS_BY_CATEGORY:
+      return {
+        ...state,
+        filteredProducts: state.products.filter(
+          (product) => product.category === action.payload
+        ),
+      };
+    default:
+      return state;
+  }
+};
+
+export default productsReducer;

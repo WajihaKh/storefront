@@ -1,30 +1,31 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { List, ListItem, ListItemText, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { removeFromCart } from '../Store/actions';
+import { removeFromCart, updateProductOnServer } from '../Store/actions';
 
 const SimpleCart = () => {
-    const cartItems = useSelector(state => state.cart.items);
-    const dispatch = useDispatch();
+  const cartItems = useSelector(state => state.cart.items);
+  const dispatch = useDispatch();
 
-    const handleRemove = (id) => {
-        dispatch(removeFromCart(id));
-    };
+  const handleRemove = (item) => {
+    dispatch(removeFromCart(item.id));
+    dispatch(updateProductOnServer(item.id, item.quantity + 1));
+  };
 
-    return (
-        <div className="simple-cart">
-            <List>
-                {cartItems.map(item => (
-                    <ListItem key={item.id}>
-                        <ListItemText primary={item.name} />
-                        <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item.id)}>
-                            <DeleteIcon />
-                        </IconButton>
-                    </ListItem>
-                ))}
-            </List>
-        </div>
-    );
+  return (
+    <div className="simple-cart">
+      <List>
+        {cartItems.map((item, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={item.name} />
+            <IconButton edge="end" aria-label="delete" onClick={() => handleRemove(item)}>
+              <DeleteIcon />
+            </IconButton>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
 };
 
 export default SimpleCart;
