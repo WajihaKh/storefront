@@ -1,17 +1,16 @@
+import { SET_CATEGORIES } from '../actions';
+
 const initialState = {
-  categories: [
-    { name: 'electronics', displayName: 'Electronics', description: 'Electronic Items' },
-    { name: 'foods', displayName: 'Foods', description: 'Food Items' },
-  ],
-  activeCategory: '',
+  categories: [],
+  activeCategory: null,
 };
 
 const categoriesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SET_ACTIVE_CATEGORY':
+    case SET_CATEGORIES:
       return {
         ...state,
-        activeCategory: action.payload,
+        categories: action.payload,
       };
     default:
       return state;

@@ -1,15 +1,20 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Grid, Card, CardContent, CardMedia, Typography, CardActions, Button } from '@mui/material';
-import { addToCart } from '../Store/actions';
+import { addToCart, updateProductOnServer } from '../Store/actions';
 
 const Products = () => {
   const filteredProducts = useSelector(state => state.products.filteredProducts);
+  console.log(filteredProducts);
   const activeCategory = useSelector(state => state.categories.activeCategory);
   const categories = useSelector(state => state.categories.categories);
   const dispatch = useDispatch();
 
   const activeCategoryDetails = categories.find(category => category.name === activeCategory);
 
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    dispatch(updateProductOnServer(product.id, product.quantity - 1));
+  };
 
   return (
     <div className="products">
@@ -43,7 +48,7 @@ const Products = () => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => dispatch(addToCart(product))}>Add to Cart</Button>
+                    <Button size="small" onClick={() => handleAddToCart(product)}>Add to Cart</Button>
                     <Button size="small">View Details</Button>
                   </CardActions>
                 </Card>
