@@ -1,6 +1,5 @@
-// components/Products/index.jsx
-
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Grid, Card, CardContent, CardMedia, Typography, CardActions, Button } from '@mui/material';
 import { addToCartAndUpdateInventory } from '../Store/actions';  
 
@@ -14,7 +13,6 @@ const Products = () => {
 
   const handleAddToCart = (product) => {
     if (product.inStock > 0) {
-      console.log('Adding to cart:', product);
       dispatch(addToCartAndUpdateInventory(product));
     }
   };
@@ -55,7 +53,7 @@ const Products = () => {
                   </CardContent>
                   <CardActions>
                     <Button size="small" onClick={() => handleAddToCart(product)} disabled={product.inStock <= 0}>Add to Cart</Button>
-                    <Button size="small">View Details</Button>
+                    <Button size="small" component={Link} to={`/products/${product.id}`}>View Details</Button>
                   </CardActions>
                 </Card>
               </Grid>
