@@ -65,10 +65,21 @@ export const fetchProducts = () => async (dispatch) => {
 };
 
 export const updateProductOnServer = (productId, quantity) => async (dispatch) => {
-  try {
-    await axios.put(`${API_URL}/products/${productId}`, { quantity });
-    dispatch(fetchProducts());
-  } catch (error) {
-    console.error('Error updating product quantity:', error);
-  }
-};
+    try {
+      await axios.put(`${API_URL}/products/${productId}`, { inStock: quantity });
+      dispatch(fetchProducts()); // Fetch updated products
+    } catch (error) {
+      console.error('Error updating product quantity:', error);
+    }
+  };
+  
+  export const addToCartAndUpdateInventory = (product) => async (dispatch) => {
+    try {
+      dispatch(addToCart(product));
+      const newQuantity = product.inStock - 1;
+      await axios.put(`${API_URL}/products/${product.id}`, { inStock: newQuantity });
+      dispatch(fetchProducts());
+    } catch (error) {
+      console.error('Error adding to cart and updating inventory:', error);
+    }
+  };
