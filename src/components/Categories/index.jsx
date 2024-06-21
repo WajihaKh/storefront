@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { List, ListItem, ListItemText, Typography, Box } from '@mui/material';
-import { setActiveCategory, filterProductsByCategory } from '../Store/actions';
+import { setActiveCategory, filterProductsByCategory } from '../Store/actions';  // Ensure this path is correct
 
 const Categories = () => {
   const categories = useSelector(state => state.categories.categories);

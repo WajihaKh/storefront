@@ -11,10 +11,10 @@ const Products = () => {
   const activeCategoryDetails = categories.find(category => category.name === activeCategory);
 
   const handleAddToCart = (product) => {
-    if (product.quantity > 0) {
-      console.log('Adding to cart:', product); // Add this line to verify the function call
+    if (product.inStock > 0) {
+      console.log('Adding to cart:', product);
       dispatch(addToCart(product));
-      dispatch(updateProductQuantity(product.id, product.quantity - 1));
+      dispatch(updateProductQuantity(product.id, product.inStock - 1));
     }
   };
 
