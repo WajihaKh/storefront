@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';  // Import the UUID library
+
 const API_URL = import.meta.env.VITE_API;
 
 export const SET_CATEGORIES = 'SET_CATEGORIES';
@@ -10,63 +12,74 @@ export const FILTER_PRODUCTS_BY_CATEGORY = 'FILTER_PRODUCTS_BY_CATEGORY';
 export const SET_ACTIVE_CATEGORY = 'SET_ACTIVE_CATEGORY';
 
 export const setCategories = (categories) => ({
-    type: SET_CATEGORIES,
-    payload: categories,
+  type: SET_CATEGORIES,
+  payload: categories,
 });
 
 export const setProducts = (products) => ({
-    type: SET_PRODUCTS,
-    payload: products,
+  type: SET_PRODUCTS,
+  payload: products,
 });
 
 export const addToCart = (product) => ({
   type: ADD_TO_CART,
-  payload: product,
+  payload: { ...product, cartItemId: uuidv4() },  // Add unique ID
 });
 
-export const removeFromCart = (productId) => ({
-    type: REMOVE_FROM_CART,
-    payload: productId,
+export const removeFromCart = (cartItemId) => ({
+  type: REMOVE_FROM_CART,
+  payload: cartItemId,
 });
 
 export const updateProductQuantity = (productId, quantity) => ({
-    type: UPDATE_PRODUCT_QUANTITY,
-    payload: { productId, quantity },
+  type: UPDATE_PRODUCT_QUANTITY,
+  payload: { productId, quantity },
 });
 
 export const filterProductsByCategory = (category) => ({
-    type: FILTER_PRODUCTS_BY_CATEGORY,
-    payload: category,
+  type: FILTER_PRODUCTS_BY_CATEGORY,
+  payload: category,
 });
 
 export const setActiveCategory = (category) => ({
-    type: SET_ACTIVE_CATEGORY,
-    payload: category,
+  type: SET_ACTIVE_CATEGORY,
+  payload: category,
 });
 
 export const fetchCategories = () => async (dispatch) => {
-    try {
-        const response = await axios.get(`${API_URL}/categories`);
-        dispatch(setCategories(response.data));
-    } catch (error) {
-        console.error('Error fetching categories:', error);
-    }
+  try {
+    const response = await axios.get(`${API_URL}/categories`);
+    dispatch(setCategories(response.data));
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+  }
 };
 
 export const fetchProducts = () => async (dispatch) => {
-    try {
-        const response = await axios.get(`${API_URL}/products`);
-        dispatch(setProducts(response.data));
-    } catch (error) {
-        console.error('Error fetching products:', error);
-    }
+  try {
+    const response = await axios.get(`${API_URL}/products`);
+    dispatch(setProducts(response.data));
+  } catch (error) {
+    console.error('Error fetching products:', error);
+  }
 };
 
 export const updateProductOnServer = (productId, quantity) => async (dispatch) => {
     try {
-        await axios.put(`${API_URL}/products/${productId}`, { quantity });
-        dispatch(fetchProducts());
+      await axios.put(`${API_URL}/products/${productId}`, { inStock: quantity });
+      dispatch(fetchProducts()); // Fetch updated products
     } catch (error) {
-        console.error('Error updating product quantity:', error);
+      console.error('Error updating product quantity:', error);
     }
-};
+  };
+  
+  export const addToCartAndUpdateInventory = (product) => async (dispatch) => {
+    try {
+      dispatch(addToCart(product));
+      const newQuantity = product.inStock - 1;
+      await axios.put(`${API_URL}/products/${product.id}`, { inStock: newQuantity });
+      dispatch(fetchProducts());
+    } catch (error) {
+      console.error('Error adding to cart and updating inventory:', error);
+    }
+  };

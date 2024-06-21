@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Grid, Card, CardContent, CardMedia, Typography, CardActions, Button } from '@mui/material';
-import { addToCart, updateProductQuantity } from '../Store/actions';
+import { addToCartAndUpdateInventory } from '../Store/actions';  
 
 const Products = () => {
   const filteredProducts = useSelector(state => state.products.filteredProducts);
@@ -11,10 +12,8 @@ const Products = () => {
   const activeCategoryDetails = categories.find(category => category.name === activeCategory);
 
   const handleAddToCart = (product) => {
-    if (product.quantity > 0) {
-      console.log('Adding to cart:', product); // Add this line to verify the function call
-      dispatch(addToCart(product));
-      dispatch(updateProductQuantity(product.id, product.quantity - 1));
+    if (product.inStock > 0) {
+      dispatch(addToCartAndUpdateInventory(product));
     }
   };
 
@@ -48,10 +47,13 @@ const Products = () => {
                     <Typography className="price" variant="body1">
                       ${product.price}
                     </Typography>
+                    <Typography className="stock" variant="body1">
+                      Available Units: {product.inStock}
+                    </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => handleAddToCart(product)}>Add to Cart</Button>
-                    <Button size="small">View Details</Button>
+                    <Button size="small" onClick={() => handleAddToCart(product)} disabled={product.inStock <= 0}>Add to Cart</Button>
+                    <Button size="small" component={Link} to={`/products/${product.id}`}>View Details</Button>
                   </CardActions>
                 </Card>
               </Grid>

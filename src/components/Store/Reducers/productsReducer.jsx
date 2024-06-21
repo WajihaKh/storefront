@@ -29,7 +29,12 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         products: state.products.map((product) =>
           product.id === action.payload.productId
-            ? { ...product, quantity: action.payload.quantity }
+            ? { ...product, inStock: action.payload.quantity }
+            : product
+        ),
+        filteredProducts: state.filteredProducts.map((product) =>
+          product.id === action.payload.productId
+            ? { ...product, inStock: action.payload.quantity }
             : product
         ),
       };
@@ -38,12 +43,12 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         products: state.products.map((product) =>
           product.id === action.payload.id
-            ? { ...product, quantity: product.quantity - 1 }
+            ? { ...product, inStock: product.inStock - 1 }
             : product
         ),
         filteredProducts: state.filteredProducts.map((product) =>
           product.id === action.payload.id
-            ? { ...product, quantity: product.quantity - 1 }
+            ? { ...product, inStock: product.inStock - 1 }
             : product
         ),
       };

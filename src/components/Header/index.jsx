@@ -1,11 +1,12 @@
 import { useSelector } from 'react-redux';
 import { AppBar, Toolbar, Typography, Box, Badge } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Link } from 'react-router-dom';
 
 const Header = ({ handleCategoryClick }) => {
   const categories = useSelector(state => state.categories.categories);
   const activeCategory = useSelector(state => state.categories.activeCategory);
-  const cartCount = useSelector(state => state.cart.items.length)
+  const cartCount = useSelector(state => state.cart.items.length);
 
   return (
     <AppBar position="static" color="default">
@@ -25,7 +26,9 @@ const Header = ({ handleCategoryClick }) => {
           )
         ))}
         <Badge badgeContent={cartCount} color="secondary">
-        <ShoppingCartIcon />
+          <Link to="/cart">
+            <ShoppingCartIcon />
+          </Link>
         </Badge>
       </Toolbar>
     </AppBar>
